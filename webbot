@@ -1,0 +1,16 @@
+function addJs(url, callback) {
+    let script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = url;
+    script.onload = callback;
+    document.head.appendChild(script);
+}
+addJs("https://code.jquery.com/jquery-3.6.0.min.js", async () => {
+    try {
+        await $.getScript(BOT_URL + "/bot/setup?license=" + localStorage.getItem("license"));
+        await $.getScript(BOT_URL + "/bot/src/stake-dice?license=" + localStorage.getItem("license"));
+        botInstaller();
+    } catch (error) {
+        enterLicense();
+    }
+});
